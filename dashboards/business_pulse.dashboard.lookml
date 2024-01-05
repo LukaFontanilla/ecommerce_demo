@@ -1,4 +1,4 @@
-- dashboard: business_pulse
+- dashboard: business_pulseee
   title: Business Pulse
   layout: newspaper
   preferred_viewer: dashboards
