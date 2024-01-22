@@ -1,4 +1,4 @@
-connection: "bq_faa"
+connection: "looker-private-demo"
 label: " eCommerce"
 include: "/queries/queries*.view" # includes all queries refinements
 include: "/views/**/*.view" # include all the views

@@ -91,7 +91,12 @@ view: promo_email {
           (
             SELECT
 
-      format(CONCAT('Generate Promo Email (150 words) including details about the following customer profile : \nName : %s\nGender : %s\nAge :%d\nDays as customer: %d\nLifetime order : %d\nLifetime revenue : %f\nExpiry Date : %s\nCity : %s\nCountry : %s'),name, gender, age, days_as_customer, lifetime_orders, lifetime_revenue, cast(DATE_ADD(CURRENT_DATE, interval 3 month) as string),city, country)  AS prompt,
+      format(CONCAT(
+      '"""'
+      ,{% parameter prompt %}
+      ,'"""'
+      )
+      )  AS prompt,
       id
       FROM  ${customer_profile.SQL_TABLE_NAME}
       WHERE {% condition users.email %} email {% endcondition %}
@@ -100,10 +105,17 @@ view: promo_email {
       0.2 AS temperature,
       100 AS max_output_tokens)) ;;
   }
+      ##,name, gender, age, days_as_customer, lifetime_orders, lifetime_revenue, cast(DATE_ADD(CURRENT_DATE, interval 3 month) as string),city, country
 
-  dimension: prompt {
-    hidden: yes
+  parameter: prompt {
+    type: string
+    view_label: "Order Items"
+    allowed_value: {
+      label: "1. Generate Marketing Email for Loyal Customers"
+      value: "Generate marketing email for loyal customers. The email should be 150 words or less."
+    }
   }
+
   dimension: generated_text {
     label: "AI Generated Email"
     description: "Use with the user email in filter"
