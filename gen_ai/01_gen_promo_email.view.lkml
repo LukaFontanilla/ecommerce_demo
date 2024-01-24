@@ -15,6 +15,7 @@ view: customer_profile {
       column: latest_order_date { field: user_order_facts.latest_order_date }
       column: city { field: users.city }
       column: country { field: users.country }
+      column: state { field: users.state }
       column: prefered_categories { field: products.prefered_categories }
       column: prefered_brands { field: products.prefered_brands }
       derived_column: p_brands {
@@ -64,6 +65,9 @@ view: customer_profile {
   dimension: country {
     description: ""
   }
+  dimension: state {
+    description: "Users State of Origin in the US"
+  }
   dimension: prefered_categories {
     description: ""
     #type: number
@@ -79,7 +83,7 @@ view: customer_profile {
 
 view: promo_email {
   derived_table: {
-    #datagroup_trigger: daily
+    datagroup_trigger: ecommerce_etl_modified
     sql: SELECT
         ml_generate_text_result['predictions'][0]['content'] AS generated_text,
         ml_generate_text_result['predictions'][0]['safetyAttributes']
@@ -90,20 +94,17 @@ view: promo_email {
           MODEL  `looker-private-demo.thelook_ecommerce.email_promotion`,
           (
             SELECT
-
       FORMAT(
         CONCAT(
           {% parameter prompt %}
-          , 'Age: {{ users.age._value }},State: {{ users.state._value }}'
+          , 'Age: %d,State: %s'
         )
+        , age
+        , state
       )
       AS prompt,
       id
       FROM  ${customer_profile.SQL_TABLE_NAME}
-      WHERE
-      {% condition users.email %} email {% endcondition %}
-        AND
-      {% condition users.email %} email {% endcondition %}
       ),
       STRUCT(
       0.2 AS temperature,
