@@ -100,7 +100,7 @@ view: promo_email {
             SELECT
       FORMAT(
         CONCAT(
-          {% parameter prompt %}
+          'This is one of our most loyal customers. Please write a personalized email for them offering a 15 percent discount using code LOYAL15. Incorporate the following data into the personalization of the email.'
           , 'Age: %d | State: %s'
         )
         , age
@@ -116,7 +116,7 @@ view: promo_email {
   }
 
   parameter: prompt {
-    # type: unquoted
+    type: unquoted
     view_label: "Order Items"
     allowed_value: {
       label: "1. Generate Marketing Email for Loyal Customers"
