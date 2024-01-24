@@ -93,6 +93,7 @@ view: promo_email {
 
         CONCAT(
           {% parameter prompt %}
+      )
       AS prompt,
       id
       FROM  ${customer_profile.SQL_TABLE_NAME}
