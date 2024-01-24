@@ -91,9 +91,22 @@ view: promo_email {
           (
             SELECT
 
-      CONCAT(
-      {% parameter prompt %}
-      )  AS prompt,
+      FORMAT(
+        CONCAT(
+          {% parameter prompt %}
+          , 'Name: %s, Gender: %s, Age: %d, Days as customer: %d, Lifetime order: %d, Lifetime revenue: %f, Expiry Date: %s, City: %s, Country: %s'
+        )
+        , name
+        , gender
+        , age
+        , days_as_customer
+        , lifetime_orders
+        , lifetime_revenue
+        , cast(DATE_ADD(CURRENT_DATE, interval 3 month) as string)
+        , city
+        , country
+      )
+      AS prompt,
       id
       FROM  ${customer_profile.SQL_TABLE_NAME}
       WHERE {% condition users.email %} email {% endcondition %}
