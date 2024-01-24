@@ -28,6 +28,10 @@ view: customer_profile {
         field: users.id
         value: "NOT NULL"
       }
+      filters: {
+        field: order_items.created_date
+        value: "90 days"
+      }
     }
   }
   dimension: gender {}
