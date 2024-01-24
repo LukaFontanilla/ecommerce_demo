@@ -30,7 +30,7 @@ view: customer_profile {
       }
       filters: {
         field: order_items.created_date
-        value: "30 days"
+        value: "7 days"
       }
     }
   }
