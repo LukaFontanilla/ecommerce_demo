@@ -91,8 +91,11 @@ view: promo_email {
           (
             SELECT
 
+      FORMAT(
         CONCAT(
           {% parameter prompt %}
+          , 'Age: {{ users.age._value }},State: {{ users.state._value }}'
+        )
       )
       AS prompt,
       id
@@ -112,7 +115,7 @@ view: promo_email {
     view_label: "Order Items"
     allowed_value: {
       label: "1. Generate Marketing Email for Loyal Customers"
-      value: "Generate marketing email for loyal customers. The email should be 150 words or less and use the following customer data: "
+      value: "This is one of our most loyal customers. Please write a personalized email for them offering a 15% discount using code LOYAL15. Incorporate location and age into the personalization of the email."
       ##profile to customize the email... Name: %s, Gender: %s, Age: %d, Days as customer: %d, Lifetime order: %d, Lifetime revenue: %f, Expiry Date: %s, City: %s, Country: %s"
     }
   }
