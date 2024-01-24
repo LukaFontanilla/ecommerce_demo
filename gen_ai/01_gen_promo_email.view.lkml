@@ -101,7 +101,7 @@ view: promo_email {
       FORMAT(
         CONCAT(
           {% parameter prompt %}
-          , 'Age: %d,State: %s'
+          , 'Age: %d | State: %s'
         )
         , age
         , state
@@ -120,8 +120,7 @@ view: promo_email {
     view_label: "Order Items"
     allowed_value: {
       label: "1. Generate Marketing Email for Loyal Customers"
-      value: "This is one of our most loyal customers. Please write a personalized email for them offering a 15% discount using code LOYAL15. Incorporate location and age into the personalization of the email."
-      ##profile to customize the email... Name: %s, Gender: %s, Age: %d, Days as customer: %d, Lifetime order: %d, Lifetime revenue: %f, Expiry Date: %s, City: %s, Country: %s"
+      value: "This is one of our most loyal customers. Please write a personalized email for them offering a 15% discount using code LOYAL15. Incorporate the following data into the personalization of the email."
     }
   }
 
