@@ -87,15 +87,12 @@ view: promo_email {
         * EXCEPT (ml_generate_text_result)
       FROM
         ML.GENERATE_TEXT(
-          MODEL  `looker-private-demo.ecomm.email_promotion`,
+          MODEL  `looker-private-demo.thelook_ecommerce.email_promotion`,
           (
             SELECT
 
-      format(CONCAT(
-      '"""'
-      ,{% parameter prompt %}
-      ,'"""'
-      )
+      CONCAT(
+      {% parameter prompt %}
       )  AS prompt,
       id
       FROM  ${customer_profile.SQL_TABLE_NAME}
@@ -105,14 +102,14 @@ view: promo_email {
       0.2 AS temperature,
       100 AS max_output_tokens)) ;;
   }
-      ##,name, gender, age, days_as_customer, lifetime_orders, lifetime_revenue, cast(DATE_ADD(CURRENT_DATE, interval 3 month) as string),city, country
 
   parameter: prompt {
-    type: string
+    # type: unquoted
     view_label: "Order Items"
     allowed_value: {
       label: "1. Generate Marketing Email for Loyal Customers"
-      value: "Generate marketing email for loyal customers. The email should be 150 words or less."
+      value: "Generate marketing email for loyal customers. The email should be 150 words or less and use the following customer data: "
+      ##profile to customize the email... Name: %s, Gender: %s, Age: %d, Days as customer: %d, Lifetime order: %d, Lifetime revenue: %f, Expiry Date: %s, City: %s, Country: %s"
     }
   }
 
