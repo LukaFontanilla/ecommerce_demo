@@ -100,11 +100,14 @@ view: promo_email {
             SELECT
       FORMAT(
         CONCAT(
-          'This is one of our most loyal customers. Please write a personalized email for them offering a 15 percent discount using code LOYAL15. Incorporate the following data into the personalization of the email.'
-          , 'Age: %d | State: %s'
+          'This is one of our most loyal customers. Please write a personalized email for them offering a 15 percent discount from the fictious company TheLook using code LOYAL15. The email should incorporate the following data, representing the customer profile, to personalize the email text. Please use the customers name in the email.'
+          , 'Name: %s | Age: %d | State: %s | Days as Customer: %d | Lifetime Revenue: %f'
         )
+        , name
         , age
         , state
+        , days_as_customer
+        , lifetime_revenue
       )
       AS prompt,
       id
